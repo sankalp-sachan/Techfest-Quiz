@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import { useLocation, Link } from 'react-router-dom';
 import { Trophy, Clock, Calendar, Search, Filter, ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Loader from '../components/Loader';
 
 const AllScores = () => {
     const [scores, setScores] = useState([]);
@@ -18,7 +19,7 @@ const AllScores = () => {
     const fetchAllScores = async () => {
         try {
             const token = localStorage.getItem('token');
-            const { data } = await axios.get('http://localhost:5000/api/quiz/all-scores', {
+            const { data } = await axios.get('https://techfest-quiz-backend.onrender.com/api/quiz/all-scores', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setScores(data);
@@ -40,7 +41,7 @@ const AllScores = () => {
         setFilteredScores(results);
     }, [searchTerm, scores]);
 
-    if (loading) return <div className="p-10 text-center">Loading User Scores...</div>;
+    if (loading) return <Loader text="Loading User Scores..." />;
 
     return (
         <div className="max-w-7xl mx-auto p-6 md:p-10">

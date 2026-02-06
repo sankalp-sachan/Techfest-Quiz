@@ -73,6 +73,8 @@ const ManageUsers = () => {
         }
     };
 
+    if (loading) return <Loader text="Loading users..." />;
+
     return (
         <div className="max-w-7xl mx-auto p-6 md:p-10">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
@@ -110,11 +112,7 @@ const ManageUsers = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {loading ? (
-                                <tr>
-                                    <td colSpan="4" className="p-10 text-center text-slate-500">Loading users...</td>
-                                </tr>
-                            ) : filteredUsers.length === 0 ? (
+                            {filteredUsers.length === 0 ? (
                                 <tr>
                                     <td colSpan="4" className="p-10 text-center text-slate-500">No users found</td>
                                 </tr>

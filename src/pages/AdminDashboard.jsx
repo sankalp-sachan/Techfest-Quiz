@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Users, BookOpen, BarChart3, Activity, Plus, Search, ChevronRight, Gavel, UserCog } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Loader from '../components/Loader';
 
 const AdminDashboard = () => {
     const [stats, setStats] = useState(null);
@@ -23,7 +24,7 @@ const AdminDashboard = () => {
         }
     };
 
-    if (loading) return <div className="p-10 text-center">Loading Analytics...</div>;
+    if (loading) return <Loader text="Loading Analytics..." />;
 
     const cards = [
         { title: 'Total Users', value: stats?.totalUsers, icon: <Users size={24} />, color: 'bg-blue-500' },

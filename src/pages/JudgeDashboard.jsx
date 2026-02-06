@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Loader from '../components/Loader';
 import axios from 'axios';
 import api from '../utils/api';
 import { Gavel, Users, BarChart3, Clock, X, ChevronLeft, Calendar, AlertTriangle, CheckCircle2, Trophy, FileCheck, Eye, EyeOff, Layers } from 'lucide-react';
@@ -137,11 +138,12 @@ const JudgeDashboard = () => {
         }
     }
 
-    if (loading) return (
-        <div className="min-h-screen flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
-        </div>
-    );
+
+    // ... (existing imports)
+
+    // ...
+
+    if (loading) return <Loader text="Loading Judge Panel..." />;
 
     return (
         <div className="max-w-7xl mx-auto p-6 md:p-10 min-h-screen">
