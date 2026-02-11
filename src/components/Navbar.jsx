@@ -32,7 +32,7 @@ const Navbar = () => {
                             </Link>
                         )}
                         {user.role === 'judge' && (
-                            <Link to="/judge-dashboard" className="flex items-center gap-2 hover:text-primary-600 font-medium">
+                            <Link to="/judge" className="flex items-center gap-2 hover:text-primary-600 font-medium">
                                 <BarChart2 size={20} /> Judge Panel
                             </Link>
                         )}

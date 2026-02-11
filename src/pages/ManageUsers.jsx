@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { toast } from 'react-hot-toast';
 import { Search, Trash2, UserCog, Shield, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Loader from '../components/Loader';
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([]);
@@ -24,9 +25,7 @@ const ManageUsers = () => {
 
     const fetchUsers = async () => {
         try {
-            const { data } = await axios.get('/users', {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            });
+            const { data } = await api.get('/users');
             setUsers(data);
             setFilteredUsers(data);
         } catch (error) {
@@ -39,9 +38,7 @@ const ManageUsers = () => {
 
     const handleRoleChange = async (userId, newRole) => {
         try {
-            await axios.put(`/users/${userId}/role`, { role: newRole }, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            });
+            await api.put(`/users/${userId}/role`, { role: newRole });
             setUsers(users.map(user => user._id === userId ? { ...user, role: newRole } : user));
             toast.success(`Role updated to ${newRole}`);
         } catch (error) {
@@ -54,9 +51,7 @@ const ManageUsers = () => {
         if (!window.confirm('Are you sure you want to delete this user? This action cannot be undone.')) return;
 
         try {
-            await axios.delete(`/users/${userId}`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            });
+            await api.delete(`/users/${userId}`);
             setUsers(users.filter(user => user._id !== userId));
             toast.success('User deleted successfully');
         } catch (error) {

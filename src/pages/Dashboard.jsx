@@ -158,15 +158,6 @@ const Dashboard = () => {
             } else {
                 toast.error('Incorrect Contest Password');
             }
-        } else {
-            if (password === '22122704') {
-                setShowModal(false);
-                toast.success('Access Granted! Good luck.');
-                navigate('/quiz', { state: { category: 'All', difficulty: 'All', limit: 10, allowBacktracking: true } });
-                setPassword('');
-            } else {
-                toast.error('Incorrect Access Password');
-            }
         }
     };
 
@@ -263,22 +254,12 @@ const Dashboard = () => {
                             </div>
                             <div className="text-center space-y-4">
                                 <h2 className="text-3xl md:text-4xl font-black tracking-tight self-center">
-                                    {selectedTab === 'Active' ? 'Practice Session' : `No ${selectedTab} Contests`}
+                                    No {selectedTab} Contests
                                 </h2>
                                 <p className="text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-                                    {selectedTab === 'Active'
-                                        ? 'No live contests currently. Enter the access code to start a general practice quiz.'
-                                        : `There are currently no ${selectedTab.toLowerCase()} contests available.`}
+                                    There are currently no {selectedTab.toLowerCase()} contests available.
                                 </p>
                             </div>
-                            {selectedTab === 'Active' && (
-                                <button
-                                    onClick={() => handleJoinClick(null)}
-                                    className="btn btn-primary px-16 py-5 flex items-center gap-3 text-xl rounded-2xl shadow-2xl shadow-primary-500/50 hover:scale-105 transition-transform"
-                                >
-                                    <Play fill="white" size={24} /> Enter Access Code
-                                </button>
-                            )}
                         </div>
                     )}
                 </div>

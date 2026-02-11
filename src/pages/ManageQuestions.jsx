@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { toast } from 'react-hot-toast';
 import { Trash2, Edit, Plus, Search, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Loader from '../components/Loader';
+
+import { useNavigate, Link } from 'react-router-dom';
 
 const ManageQuestions = () => {
+    const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(true);
@@ -15,10 +19,7 @@ const ManageQuestions = () => {
 
     const fetchQuestions = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const { data } = await axios.get('/questions', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const { data } = await api.get('/questions');
             setQuestions(data);
         } catch (error) {
             toast.error('Failed to fetch questions');
@@ -30,10 +31,7 @@ const ManageQuestions = () => {
     const deleteQuestion = async (id) => {
         if (!window.confirm('Are you sure you want to delete this question?')) return;
         try {
-            const token = localStorage.getItem('token');
-            await axios.delete(`/questions/${id}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            await api.delete(`/questions/${id}`);
             toast.success('Question deleted');
             setQuestions(questions.filter(q => q._id !== id));
         } catch (error) {
@@ -42,8 +40,8 @@ const ManageQuestions = () => {
     };
 
     const filteredQuestions = questions.filter(q =>
-        q.questionText.toLowerCase().includes(search.toLowerCase()) ||
-        q.category.toLowerCase().includes(search.toLowerCase())
+        q.questionText?.toLowerCase().includes(search.toLowerCase()) ||
+        q.category?.toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -53,6 +51,9 @@ const ManageQuestions = () => {
                     <h1 className="text-4xl font-bold mb-2">Questions Management</h1>
                     <p className="text-slate-500 dark:text-slate-400">View and manage the entire question bank</p>
                 </div>
+                <Link to="/admin/add-question" className="btn btn-primary px-8 py-4 flex items-center gap-2">
+                    <Plus size={20} /> Add Question
+                </Link>
             </div>
 
             <div className="glass p-6 rounded-[2rem] shadow-xl border-white/40 mb-10 flex flex-col md:flex-row gap-4 items-center">
@@ -61,18 +62,15 @@ const ManageQuestions = () => {
                     <input
                         type="text"
                         placeholder="Search by question text or category..."
-                        className="w-full pl-12 pr-6 py-4 bg-slate-100 dark:bg-slate-800 rounded-2xl outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium"
+                        className="w-full pl-12 pr-6 py-4 bg-white dark:bg-slate-900 rounded-2xl outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium border-2 border-slate-100 dark:border-slate-800"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
                 </div>
-                <button className="btn btn-primary px-8 py-4 flex items-center gap-2 w-full md:w-auto">
-                    <Filter size={20} /> Filter
-                </button>
             </div>
 
             {loading ? (
-                <div className="text-center p-20">Loading questions...</div>
+                <Loader text="Loading questions..." />
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <AnimatePresence>
@@ -92,7 +90,10 @@ const ManageQuestions = () => {
                                         {q.difficulty}
                                     </span>
                                     <div className="flex gap-2">
-                                        <button className="p-2 text-slate-400 hover:text-primary-600 transition-colors">
+                                        <button
+                                            onClick={() => navigate(`/admin/edit-question/${q._id}`)}
+                                            className="p-2 text-slate-400 hover:text-primary-600 transition-colors"
+                                        >
                                             <Edit size={18} />
                                         </button>
                                         <button

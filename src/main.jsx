@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import axios from 'axios'
 import './index.css'
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 // Configure axios for production
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'https://techfest-quiz-backend.onrender.com/api';
@@ -13,6 +14,8 @@ if (token) {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <App />
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+            <App />
+        </GoogleOAuthProvider>
     </React.StrictMode>,
 )

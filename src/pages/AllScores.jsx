@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { toast } from 'react-hot-toast';
 import { useLocation, Link } from 'react-router-dom';
 import { Trophy, Clock, Calendar, Search, Filter, ChevronLeft } from 'lucide-react';
@@ -18,10 +18,7 @@ const AllScores = () => {
 
     const fetchAllScores = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const { data } = await axios.get('https://techfest-quiz-backend.onrender.com/api/quiz/all-scores', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const { data } = await api.get('/quiz/all-scores');
             setScores(data);
             setFilteredScores(data);
         } catch (error) {

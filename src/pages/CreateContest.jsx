@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { toast } from 'react-hot-toast';
 import { Trophy, Calendar, Clock, Lock, ArrowLeft, Save } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -36,7 +36,7 @@ const CreateContest = () => {
 
     const fetchQuizNames = async () => {
         try {
-            const { data } = await axios.get('/questions/names');
+            const { data } = await api.get('/questions/names');
             setQuizNames(data);
         } catch (error) {
             console.error('Failed to fetch quiz names');
@@ -67,7 +67,7 @@ const CreateContest = () => {
         };
 
         try {
-            await axios.post('/contests', payload);
+            await api.post('/contests', payload);
             toast.success('Contest Created Successfully!');
             navigate('/admin');
         } catch (error) {

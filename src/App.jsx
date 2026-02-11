@@ -82,6 +82,11 @@ function App() {
                                         <AddQuestion />
                                     </ProtectedRoute>
                                 } />
+                                <Route path="/admin/edit-question/:id" element={
+                                    <ProtectedRoute adminOnly>
+                                        <AddQuestion />
+                                    </ProtectedRoute>
+                                } />
                                 <Route path="/admin/questions" element={
                                     <ProtectedRoute adminOnly>
                                         <ManageQuestions />

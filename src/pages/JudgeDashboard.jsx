@@ -27,8 +27,8 @@ const JudgeDashboard = () => {
     };
 
     const filteredScores = scores.filter(score => {
+        if (!score.contestId) return false; // Exclude practice attempts
         if (selectedContestFilter === 'all') return true;
-        if (selectedContestFilter === 'practice') return !score.contestId;
         return score.contestId === selectedContestFilter;
     });
 
@@ -176,8 +176,7 @@ const JudgeDashboard = () => {
                                     <Gavel size={32} />
                                 </span>
                                 {selectedContestFilter === 'all' ? 'Judge Panel' : (
-                                    selectedContestFilter === 'practice' ? 'Practice Arena' :
-                                        (allContests.find(c => c._id === selectedContestFilter)?.title || 'Contest Details')
+                                    (allContests.find(c => c._id === selectedContestFilter)?.title || 'Contest Details')
                                 )}
                             </h1>
                             <p className="text-xl text-slate-500 dark:text-slate-400 font-medium max-w-2xl">
@@ -252,36 +251,6 @@ const JudgeDashboard = () => {
             {selectedContestFilter === 'all' ? (
                 /* GALLERY VIEW */
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Practice Card */}
-                    <motion.div
-                        whileHover={{ y: -5 }}
-                        onClick={() => setSelectedContestFilter('practice')}
-                        className="cursor-pointer group relative overflow-hidden rounded-[2.5rem] bg-slate-900 border border-slate-800 p-8 shadow-2xl transition-all hover:border-indigo-500/50 hover:shadow-indigo-500/20"
-                    >
-                        <div className="absolute top-0 right-0 p-24 bg-indigo-500/10 blur-3xl rounded-full -mr-10 -mt-10 transition-all group-hover:bg-indigo-500/20" />
-                        <div className="relative z-10">
-                            <div className="flex justify-between items-start mb-8">
-                                <div className="p-4 rounded-2xl bg-slate-800 text-indigo-400 mb-4 shadow-inner">
-                                    <Layers size={32} />
-                                </div>
-                                <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                                    Always Open
-                                </span>
-                            </div>
-                            <h3 className="text-3xl font-black text-white mb-2">Practice Arena</h3>
-                            <p className="text-slate-400 font-medium mb-8">General quizzes and practice problems.</p>
-
-                            <div className="flex items-center gap-4 text-slate-400 text-sm font-bold uppercase tracking-widest">
-                                <Users size={16} />
-                                {scores.filter(s => !s.contestId).length} Attempts
-                            </div>
-
-                            <div className="mt-8 flex items-center gap-2 text-indigo-400 font-bold group-hover:translate-x-2 transition-transform">
-                                View Participants <ChevronLeft className="rotate-180" size={16} />
-                            </div>
-                        </div>
-                    </motion.div>
-
                     {/* Contest Cards */}
                     {allContests.map((contest) => {
                         const isLive = new Date(contest.startTime) <= new Date() && new Date(contest.endTime) >= new Date();
@@ -595,7 +564,7 @@ const JudgeDashboard = () => {
 
                             <div className="mb-0">
                                 <span className="inline-block px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-sm mb-4 border border-slate-200 dark:border-slate-700">
-                                    Target Scope: {selectedContestFilter === 'all' ? 'All Quizzes' : (selectedContestFilter === 'practice' ? 'Practice Quizzes' : (allContests.find(c => c._id === selectedContestFilter)?.title || 'Selected Contest'))}
+                                    Target Scope: {selectedContestFilter === 'all' ? 'All Quizzes' : (allContests.find(c => c._id === selectedContestFilter)?.title || 'Selected Contest')}
                                 </span>
                                 <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm mx-auto mb-8">
                                     {confirmModal.type === 'leaderboard'
@@ -610,7 +579,7 @@ const JudgeDashboard = () => {
                                 <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 mb-8">
                                     <label className="block text-sm font-bold text-slate-500 mb-3">
                                         Type <span className="text-indigo-600 font-black">
-                                            "{selectedContestFilter === 'all' ? 'Confirm All' : (selectedContestFilter === 'practice' ? 'Practice' : (allContests.find(c => c._id === selectedContestFilter)?.title || 'Confirm'))}"
+                                            "{selectedContestFilter === 'all' ? 'Confirm All' : (allContests.find(c => c._id === selectedContestFilter)?.title || 'Confirm')}"
                                         </span> to verify:
                                     </label>
                                     <input
@@ -633,9 +602,9 @@ const JudgeDashboard = () => {
                                 </button>
                                 <button
                                     onClick={() => handlePublishAll(confirmModal.type)}
-                                    disabled={confirmInput !== (selectedContestFilter === 'all' ? 'Confirm All' : (selectedContestFilter === 'practice' ? 'Practice' : (allContests.find(c => c._id === selectedContestFilter)?.title || 'Confirm')))}
+                                    disabled={confirmInput !== (selectedContestFilter === 'all' ? 'Confirm All' : (allContests.find(c => c._id === selectedContestFilter)?.title || 'Confirm'))}
                                     className={`flex-1 py-5 rounded-2xl font-bold shadow-xl flex items-center justify-center gap-2 transition-all 
-                                        ${confirmInput !== (selectedContestFilter === 'all' ? 'Confirm All' : (selectedContestFilter === 'practice' ? 'Practice' : (allContests.find(c => c._id === selectedContestFilter)?.title || 'Confirm')))
+                                        ${confirmInput !== (selectedContestFilter === 'all' ? 'Confirm All' : (allContests.find(c => c._id === selectedContestFilter)?.title || 'Confirm'))
                                             ? 'bg-slate-200 dark:bg-slate-800 text-slate-400 cursor-not-allowed opacity-70'
                                             : `hover:scale-105 ${confirmModal.type === 'leaderboard'
                                                 ? (isAllLeaderboardPublished ? 'bg-slate-700 text-white' : 'bg-indigo-600 text-white shadow-indigo-500/30')
