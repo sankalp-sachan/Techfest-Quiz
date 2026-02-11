@@ -135,8 +135,10 @@ const Quiz = () => {
                 timeTaken: (duration ? duration * 60 : 1800) - timeLeft,
                 category,
                 difficulty,
-                contestId
+                contestId,
+                quizTitle: location.state?.quizTitle || 'Practice Session'
             });
+
 
             localStorage.removeItem(`quiz_state_${contestId || 'default'}`);
             toast.success("Quiz submitted successfully!");

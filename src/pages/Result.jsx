@@ -22,8 +22,9 @@ const Result = () => {
                 {result.isPublished ? (
                     <div className="bg-gradient-to-br from-primary-600 to-indigo-700 p-12 text-center text-white relative">
                         <Trophy className="mx-auto mb-6 text-yellow-300 drop-shadow-lg" size={80} />
-                        <h1 className="text-5xl font-black mb-2">Quiz Completed!</h1>
+                        <h1 className="text-5xl font-black mb-2">{result.quizTitle || 'Quiz Completed!'}</h1>
                         <p className="opacity-80 text-xl">Excellent effort in {result.category} ({result.difficulty})</p>
+
 
                         <div className="mt-10 flex justify-center gap-12">
                             <div>
@@ -46,7 +47,8 @@ const Result = () => {
                     <div className="bg-gradient-to-br from-slate-700 to-slate-900 p-12 text-center text-white relative">
                         <CheckCircle2 className="mx-auto mb-6 text-green-400 drop-shadow-lg" size={80} />
                         <h1 className="text-5xl font-black mb-2">Submitted!</h1>
-                        <p className="opacity-80 text-xl">Your response for {result.category} has been recorded.</p>
+                        <p className="opacity-80 text-xl">Your response for {result.quizTitle || result.category} has been recorded.</p>
+
                         <div className="mt-8 p-4 bg-white/10 rounded-2xl inline-block backdrop-blur-sm border border-white/10">
                             <p className="text-sm font-medium">Final results and leaderboard will be announced shortly.</p>
                         </div>

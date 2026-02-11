@@ -141,10 +141,12 @@ const Dashboard = () => {
                 limit: contest.questionLimit,
                 contestId: contest._id,
                 duration: contest.duration,
-                allowBacktracking: contest.allowBacktracking
+                allowBacktracking: contest.allowBacktracking,
+                quizTitle: contest.title
             }
         });
     }
+
 
     const startQuiz = (e) => {
         e.preventDefault();

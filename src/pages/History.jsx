@@ -62,7 +62,10 @@ const History = () => {
                                 </div>
 
                                 <div className="flex-1 space-y-2 text-center md:text-left">
-                                    <h3 className="text-xl font-bold">{attempt.category} - {attempt.difficulty}</h3>
+                                    <h3 className="text-xl font-bold">
+                                        {attempt.quizTitle || `${attempt.category} - ${attempt.difficulty}`}
+                                    </h3>
+
                                     <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
                                         <span className="flex items-center gap-1.5"><Calendar size={14} /> {date}</span>
                                         <span className="flex items-center gap-1.5"><Clock size={14} /> {attempt.timeTaken}s</span>
