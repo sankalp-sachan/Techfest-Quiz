@@ -97,10 +97,8 @@ const Quiz = () => {
             selectedAnswer: selectedOption
         };
         setAnswers(newAnswers);
-
-        // Brief delay for visual feedback then next
-        setTimeout(() => handleNext(), 800);
     };
+
 
     const handleNext = useCallback(() => {
         if (currentIndex < questions.length - 1) {
@@ -249,8 +247,12 @@ const Quiz = () => {
                             onClick={handleNext}
                             className="w-full btn btn-primary py-4 flex items-center justify-center gap-2 shadow-primary-500/40"
                         >
-                            {currentIndex === questions.length - 1 ? 'Finish Quiz' : 'Skip / Next'} <ArrowRight size={20} />
+                            {currentIndex === questions.length - 1
+                                ? 'Finish Quiz'
+                                : (answers[currentIndex] ? 'Next Question' : 'Skip / Next')}
+                            <ArrowRight size={20} />
                         </button>
+
 
                         {currentIndex > 0 && allowBacktracking && (
                             <button
