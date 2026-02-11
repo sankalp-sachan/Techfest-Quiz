@@ -109,20 +109,23 @@ const Result = () => {
                     )}
 
 
-                    <div className="mt-12 flex flex-col sm:flex-row gap-4">
+                    <div className="mt-12 flex flex-col items-center gap-6">
                         <button
                             onClick={() => navigate('/dashboard')}
-                            className="flex-1 btn btn-primary py-4 flex items-center justify-center gap-2"
+                            className="w-full max-w-sm bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-700 hover:to-indigo-700 text-white font-black py-4 px-8 rounded-2xl shadow-xl shadow-primary-500/25 flex items-center justify-center gap-3 transform transition hover:scale-105 active:scale-95 group"
                         >
-                            <Home size={20} /> Finish Quiz
+                            <Home size={24} className="group-hover:animate-bounce" />
+                            <span className="text-lg">Back to Dashboard</span>
                         </button>
+
                         <button
                             onClick={() => navigate('/history')}
-                            className="flex-1 px-8 py-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-2"
+                            className="text-slate-500 dark:text-slate-400 font-bold hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-2"
                         >
-                            <Home size={20} /> Back to Dashboard
+                            View my past attempts
                         </button>
                     </div>
+
                 </div>
             </motion.div>
         </div>
