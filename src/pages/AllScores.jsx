@@ -19,8 +19,9 @@ const AllScores = () => {
     const fetchAllScores = async () => {
         try {
             const { data } = await api.get('/quiz/all-scores');
-            setScores(data);
-            setFilteredScores(data);
+            const scoresList = data.scores || [];
+            setScores(scoresList);
+            setFilteredScores(scoresList);
         } catch (error) {
             toast.error('Failed to fetch user scores');
             console.error(error);

@@ -92,7 +92,7 @@ const JudgeDashboard = () => {
         try {
             const token = localStorage.getItem('token');
             const { data } = await api.get('/quiz/all-scores');
-            setScores(data);
+            setScores(data.scores || []);
         } catch (error) {
             console.error('Error fetching scores:', error);
         } finally {
