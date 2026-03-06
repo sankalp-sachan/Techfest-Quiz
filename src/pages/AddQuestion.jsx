@@ -17,7 +17,8 @@ const AddQuestion = () => {
         category: '',
         difficulty: 'Medium',
         timer: 30,
-        quizName: ''
+        quizName: '',
+        contestId: ''
     });
 
     useEffect(() => {
@@ -40,7 +41,8 @@ const AddQuestion = () => {
                             category: question.category || '',
                             difficulty: question.difficulty || 'Medium',
                             timer: question.timer || 30,
-                            quizName: question.quizName || ''
+                            quizName: question.quizName || '',
+                            contestId: question.contestId || ''
                         });
                     } else {
                         toast.error('Question not found');
@@ -203,12 +205,13 @@ const AddQuestion = () => {
                                             const targetName = (contest.quizName && contest.quizName !== 'All') ? contest.quizName : contest.title;
                                             setFormData(prev => ({
                                                 ...prev,
+                                                contestId: e.target.value,
                                                 quizName: targetName,
                                                 category: contest.category || 'General'
                                             }));
                                         }
                                     }}
-                                    value={upcomingContests.find(c => c.quizName === formData.quizName || c.title === formData.quizName)?._id || ""}
+                                    value={formData.contestId}
                                 >
                                     <option value="">Select a contest to link</option>
                                     {upcomingContests.map((contest) => (

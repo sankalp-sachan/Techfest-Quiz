@@ -107,10 +107,14 @@ const ManageQuestions = () => {
 
                                 <h3 className="text-xl font-bold mb-6 line-clamp-3 h-[4.5rem]">{q.questionText}</h3>
 
-                                <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-auto pt-6 border-t border-slate-100 dark:border-slate-800">
+                                <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex justify-between">
                                     <div className="flex flex-col gap-1">
                                         <span>Category</span>
                                         <span className="text-primary-600">{q.category}</span>
+                                    </div>
+                                    <div className="flex flex-col gap-1 text-right">
+                                        <span>Linked Quiz</span>
+                                        <span className="text-indigo-600 font-black">{q.quizName || 'General'}</span>
                                     </div>
                                 </div>
                             </motion.div>

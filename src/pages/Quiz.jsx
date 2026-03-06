@@ -72,7 +72,7 @@ const Quiz = () => {
 
     const fetchQuestions = async () => {
         try {
-            const { data } = await axios.get(`/questions/random?category=${category}&difficulty=${difficulty}&limit=${limit}`);
+            const { data } = await axios.get(`/questions/random?category=${category}&difficulty=${difficulty}&limit=${limit}&contestId=${contestId || ''}`);
             if (data.length === 0) {
                 toast.error("No questions found for this category/difficulty.");
                 navigate('/dashboard');
